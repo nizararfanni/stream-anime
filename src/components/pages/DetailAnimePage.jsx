@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { UseDetailListAnime } from "../../hooks/useGetAnime";
 
-const detailAnimePage = () => {
+const DetailAnimePage = () => {
   const { animeId } = useParams();
   const { detailAnime, isLoading } = UseDetailListAnime(animeId);
   // {
@@ -115,4 +115,4 @@ const detailAnimePage = () => {
   );
 };
 
-export default detailAnimePage;
+export default DetailAnimePage;

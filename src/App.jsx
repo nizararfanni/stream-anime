@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useGetAnime } from "./hooks/useGetAnime";
 import { Route, Router, Routes } from "react-router-dom";
-import OngoingAnime from "./components/layout/OngoingAnime";
 import DetailAnimePage from "./components/pages/detailAnimePage";
 import CompletedAnime from "./components/layout/CompletedAnime";
 import HomePage from "./components/pages/HomePage";
