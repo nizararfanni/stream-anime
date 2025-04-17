@@ -1,23 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import Navbar from "../fragments/home/Navbar";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 function AboutPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const {isDarkMode} = useContext(DarkModeContext);
+ 
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Navbar */}
-      <Navbar></Navbar>
-
+    <div
+      className={`min-h-screen ${
+        isDarkMode ? "bg-white text-black" : "bg-gray-900 text-white"
+      }`}
+    >
       {/* Hero Section */}
-      <section className="pt-20 pb-12 bg-gray-800">
+      <section className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-purple-400">
             About Nznime
           </h1>
-          <p className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto">
+          <p className="mt-4 text-lg  max-w-3xl mx-auto">
             <Typewriter
               words={[
                 `Nznime is your ultimate destination for streaming anime and
@@ -40,7 +44,7 @@ function AboutPage() {
               <h2 className="text-3xl font-bold text-purple-400">
                 Our Mission
               </h2>
-              <p className="mt-4 text-gray-300">
+              <p className="mt-4">
                 At Nznime, we aim to connect anime fans worldwide with
                 high-quality content. Our mission is to provide a platform where
                 you can watch your favorite series, discover new stories, and
@@ -67,21 +71,21 @@ function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                title: "Ad-Free Streaming",
-                desc: "Enjoy your anime without interruptions.",
+                title: "Seamless Anime Experience",
+                desc: "Immerse yourself in uninterrupted, high-quality anime streaming.",
               },
               {
-                title: "Vast Library",
-                desc: "Explore thousands of anime and manga titles.",
+                title: "Endless Choices Await",
+                desc: "Discover a massive collection of anime and manga tailored to your taste.",
               },
               {
-                title: "Community Driven",
-                desc: "Connect with fans and share your passion.",
+                title: "Join the Ultimate Anime Community",
+                desc: "Connect, share, and dive deep into the world of anime with passionate fans like you.",
               },
             ].map((feature) => (
               <div
                 key={feature.title}
-                className="p-6 bg-gray-900 rounded-lg flex flex-col justify-between min-h-[200px]"
+                className="p-6 bg-gray-900 rounded-lg flex flex-col justify-between min-h-[200px] hover:bg-gray-700 transition duration-300 active:scale-105 ease-in-out hover:scale-105"
               >
                 <div>
                   <h3 className="text-xl font-semibold text-purple-400">
@@ -125,7 +129,7 @@ function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-6 bg-gray-900 border-t border-gray-800">
+      <footer className="py-6  border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-400">© 2025 Nznime. All rights reserved.</p>
         </div>

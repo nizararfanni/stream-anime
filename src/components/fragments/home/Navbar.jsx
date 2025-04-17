@@ -18,12 +18,12 @@ const Navbar = ({
 
   return (
     <nav
-      className={`fixed w-full  backdrop-blur-md z-50 text-white ${
-        isDarkMode ? `bg-white/70` : `bg-gray-900/80`
+      className={`fixed w-full  backdrop-blur-md z-50  ${
+        isDarkMode ? `bg-white/70 text-black` : `bg-gray-900/80 text-white`
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 relative">
           <div className="flex-shrink-0">
             <h1 className="text-2xl font-bold text-purple-400">NzNime</h1>
           </div>
@@ -37,7 +37,7 @@ const Navbar = ({
             >
               <button
                 onClick={toggleDarkMode}
-                className="bg-gray-700 text-white "
+                className="bg-gray-700 text-white h-6 w-7 rounded  flex items-center justify-center p-2"
               >
                 {isDarkMode ? <CiLight /> : <MdDarkMode />}
               </button>
@@ -48,7 +48,7 @@ const Navbar = ({
                 isLoading={isLoading}
               ></SearchAnime>
               <Link
-                to={`/home`}
+                to={`/`}
                 className="hover:text-purple-400 transition-colors"
               >
                 Home
@@ -59,8 +59,11 @@ const Navbar = ({
               >
                 Anime
               </Link>
-              <Link to="#" className="hover:text-purple-400 transition-colors">
-                Manga
+              <Link
+                to="/movies"
+                className="hover:text-purple-400 transition-colors"
+              >
+                Movies
               </Link>
               <Link
                 to={`/about`}
@@ -70,8 +73,11 @@ const Navbar = ({
               </Link>
             </div>
           </div>
-          <button onClick={toggleDarkMode} className="bg-gray-700 text-white md:hidden ">
-            {isDarkMode ? <CiLight /> : <MdDarkMode />}
+          <button
+            onClick={toggleDarkMode}
+            className="bg-gray-700 text-white md:hidden absolute right-10 top-5 h-6 w-7 rounded  flex items-center justify-center"
+          >
+            {isDarkMode ? <MdDarkMode /> : <CiLight />}
           </button>
 
           {/* Mobile Menu  */}
@@ -111,10 +117,7 @@ const Navbar = ({
                 searchAnime={searchAnime}
                 isLoading={isLoading}
               ></SearchAnime>
-              <Link
-                to={`/home`}
-                className="block px-3 py-2 hover:text-purple-400"
-              >
+              <Link to={`/`} className="block px-3 py-2 hover:text-purple-400">
                 Home
               </Link>
               <Link
@@ -123,8 +126,11 @@ const Navbar = ({
               >
                 Anime
               </Link>
-              <Link to="#" className="block px-3 py-2 hover:text-purple-400">
-                Manga
+              <Link
+                to="/movies"
+                className="hover:text-purple-400  px-3 py-2 transition-colors"
+              >
+                Movies
               </Link>
               <Link
                 to={`/about`}

@@ -80,7 +80,7 @@ export const UseWatchAnime = (episodeId) => {
       try {
         setIsLoading(true);
         const res = await AxiosConfig.get(`episode/${episodeId}`);
-        console.log("data watch", res.data);
+        // console.log("data watch", res.data);
         setWatchAnime(res.data);
       } catch (error) {
         setIsLoading(false);
@@ -104,7 +104,7 @@ export const UseWatchQualityAnime = (serverId) => {
       try {
         setIsLoading(true);
         const res = await AxiosConfig.get(`server/${serverId}`);
-        console.log("Response server/", serverId, ":", res.data);
+        // console.log("Response server/", serverId, ":", res.data);
         setWatchQuality(res.data.data.url || "");
       } catch (error) {
         setIsLoading(false);
@@ -172,3 +172,27 @@ export const UseDownloadAnime = (batchId) => {
   }, [batchId]);
   return { download, isLoading };
 };
+
+
+
+export const UseGetAnimeMovies = (page = 1) => {
+  const [animeMovies, setAnimeMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const getAnime = async () => {
+      try {
+        setIsLoading(true);
+        const res = await AxiosConfig.get(`movies?page=${page}`);
+        // console.log("data apa ini", res.data.data);
+        setAnimeMovies(res.data);
+      } catch (error) {
+        setIsLoading(false);
+        console.error("error fetch data", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getAnime();
+  }, [page]);
+  return { animeMovies, isLoading };
+}

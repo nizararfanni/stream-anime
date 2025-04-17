@@ -18,7 +18,7 @@ const CompletedAnime = () => {
           Loading.....
         </div>
       ) : (
-        <div>
+        <div className="py-5">
           {/* Features Section */}
           <Feature
             animeOngoing={animeCompleted}

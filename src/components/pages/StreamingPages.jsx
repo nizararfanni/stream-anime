@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import {
@@ -7,11 +7,11 @@ import {
   UseWatchQualityAnime,
 } from "../../hooks/useGetAnime";
 import Navbar from "../fragments/home/Navbar";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 function StreamingPage() {
-  // Ambil animeId dan episodeId dari URL
-  const { animeId, episodeId } = useParams();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Ambil  episodeId dari URL
+  const { episodeId } = useParams();
   const [currentEpisode, setCurrentEpisode] = useState(null);
   //activeepside buat ubah data episode setiap ganti epsiode di page streaming
   const [activeEpisode, setActiveEpisode] = useState(episodeId);
@@ -20,34 +20,28 @@ function StreamingPage() {
   const [selectedQuality, setSelectedQuality] = useState(null);
   const { watchQuality, isLoading: isLoadingQuality } =
     UseWatchQualityAnime(selectedQuality);
-  const [search, setSearch] = useState("");
-  const { searchAnime, isLoading: searchLoading } = UseSearchAnime(search);
+  const { isDarkMode } = useContext(DarkModeContext);
 
-  {
-    console.log(episodeId);
-  }
   //handle fungsi buat pilih quality
   const handleServerChange = (serverId) => {
     setSelectedQuality(serverId);
   };
 
-  const handleChange = (e) => {
-    // console.log(e.target.value);
-    setSearch(e.target.value);
-  };
+  // Reset selectedQuality tiap kali episode berganti
+  useEffect(() => {
+    setSelectedQuality(null);
+  }, [activeEpisode]);
+
+  // Tentukan URL yang dipakai:
+  const hasCustomQuality = selectedQuality !== null;
+  const videoUrl = hasCustomQuality
+    ? watchQuality
+    : watchAnime?.data?.defaultStreamingUrl;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Navbar */}
-      <Navbar
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        handleChange={handleChange}
-        search={search}
-        searchAnime={searchAnime}
-        isLoading={searchLoading}
-      ></Navbar>
-
+    <div
+      className={`${isDarkMode ? `bg-white text-black` : `bg-gray-800 text-white`}min-h-screen `}
+    >
       {/* Main Content */}
       <section className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +57,8 @@ function StreamingPage() {
                   </p>
                 ) : watchAnime?.data ? (
                   <iframe
-                    src={watchQuality || watchAnime?.data?.defaultStreamingUrl}
+                    key={watchQuality || watchAnime?.data?.defaultStreamingUrl}
+                    src={videoUrl}
                     title="Anime Video"
                     allow="fullscreen"
                     width="100%"
@@ -102,11 +97,11 @@ function StreamingPage() {
               {/* Anime Info */}
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="md:col-span-2">
-                  <h1 className="text-3xl font-bold text-purple-400">
+                  <h1 className="md:text-3xl font-bold text-purple-400">
                     {watchAnime.data?.title} episode :
                     {currentEpisode?.title || "Episode"}
                   </h1>
-                  <div className="mt-4 text-gray-300">
+                  <div className="mt-4 flex flex-wrap">
                     {watchAnime.data?.genreList &&
                     watchAnime.data?.genreList?.length > 0 ? (
                       watchAnime.data?.genreList.map((genre, index) => (
@@ -145,34 +140,6 @@ function StreamingPage() {
                     "tidak ada episode"}
                 </button>
               </div>
-              {/* Episode List */}
-              {/* <div>
-                <h2 className="text-2xl font-semibold text-purple-400 mb-4">
-                  Episodes
-                </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                  {watchAnime.data?.recommendedEpisodeList.map(
-                    (episode, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          setActiveEpisode(episode.href);
-                          setCurrentEpisode(episode);
-                          //reset quality nya
-                          setSelectedQuality(null);
-                        }}
-                        className={`p-4 rounded-lg text-center transition-colors ${
-                          currentEpisode === episode.episodeId
-                            ? "bg-purple-600 text-white"
-                            : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                        }`}
-                      >
-                        {episode.title}
-                      </button>
-                    )
-                  ) || <p className="text-gray-400">No episodes available</p>}
-                </div>
-              </div> */}
             </div>
           ) : (
             <p className="text-center text-gray-400">Anime not found</p>

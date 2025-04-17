@@ -7,8 +7,8 @@ const DownloadPages = () => {
   const { download, isLoading } = UseDownloadAnime(batchId);
 
   return (
-    <div className="flex justify-center w-full min-h-screen items-center bg-gradient-to-r from-[#56024d] via-[#78066c] to-[#250221]">
-      <div className="w-96 px-8 py-4 bg-white border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
+    <div className="flex justify-center w-full min-h-screen items-center bg-gradient-to-r from-[#123458] via-[#2E5077] to-[#091057]">
+      <div className="w-96 px-8 py-15 bg-white border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] grid place-content-center">
         <div>
           {isLoading ? (
             <div> loading.....</div>

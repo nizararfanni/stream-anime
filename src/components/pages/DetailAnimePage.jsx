@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UseDetailListAnime } from "../../hooks/useGetAnime";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const DetailAnimePage = () => {
   const { animeId } = useParams();
   const { detailAnime, isLoading } = UseDetailListAnime(animeId);
-  // {
-  //   console.log("slug", detailAnime?.data);
-  // }
+
   const sortedEpisodeList = detailAnime?.data?.episodeList.sort(
     (a, b) => a.title - b.title
   );
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   return (
     <div className="flex justify-center items-center  ">
-      <div className="w-full  bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div
+        className={`w-full ${
+          isDarkMode
+            ? "bg-white text-black"
+            : "bg-gray-800 dark:bg-gray-800 dark:border-gray-700 text-white"
+        } border border-gray-200 rounded-lg shadow-sm `}
+      >
         <div className="text-center">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white py-3">
             Detail Anime
@@ -23,7 +29,7 @@ const DetailAnimePage = () => {
         <div className="p-5 flex flex-col gap-4">
           {/* detail anime */}
           {isLoading ? (
-            <div className="dark:bg-gray-800 flex justify-center min-h-screen items-center text-3xl font-bold text-white">
+            <div className="dark:bg-gray-800 flex justify-center min-h-screen items-center text-3xl font-bold ">
               Loading.....
             </div>
           ) : (
@@ -37,7 +43,7 @@ const DetailAnimePage = () => {
                     alt="lol"
                   />
                 </div>
-                <div className="grid grid-cols-2 place-items-center text-white font-semibold py-3 text-sm ">
+                <div className="grid grid-cols-2 place-items-center font-semibold py-3 text-sm ">
                   <div>
                     <p className="mb-3 ">Japanese Name</p>
                     <p className="mb-3  ">Tayang Perdana</p>
@@ -81,16 +87,16 @@ const DetailAnimePage = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center items-center font-bold text-white">
+                    <div className="text-center items-center font-bold ">
                       belum ada batch nya jir
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col justify-center items-center text-white font-semibold">
+                <div className="flex flex-col justify-center items-center  font-semibold">
                   <p>Synopsys</p>
                   <p>{detailAnime?.data?.synopsis?.paragraphs[0]}</p>
                 </div>
-                <div className="flex flex-col justify-center items-center gap-2 py-5  text-white font-semibold ">
+                <div className="flex flex-col justify-center items-center gap-2 py-5   font-semibold ">
                   <p>List Episodes</p>
                   <div className="w-64 h-96 overflow-y-scroll scroll-hidden">
                     {/* mapping episode */}
