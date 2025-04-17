@@ -55,7 +55,7 @@ const DetailAnimePage = () => {
                     <p className="mb-3 ">Status</p>
                     <p className="mb-3 ">Genre</p>
                   </div>
-                  <div className="truncate">
+                  <div className="truncate flex flex-wrap flex-col">
                     <p className="mb-3 text-sm">
                       {detailAnime?.data?.japanese || ""}
                     </p>
