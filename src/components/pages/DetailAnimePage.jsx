@@ -55,7 +55,7 @@ const DetailAnimePage = () => {
                     <p className="mb-3 ">Status</p>
                     <p className="mb-3 ">Genre</p>
                   </div>
-                  <div>
+                  <div className="truncate">
                     <p className="mb-3 text-sm">
                       {detailAnime?.data?.japanese || ""}
                     </p>
@@ -72,7 +72,7 @@ const DetailAnimePage = () => {
                       {detailAnime?.data?.score.users || "0"}
                     </p>
                     <p className="mb-3 ">{detailAnime?.data?.status || ""}</p>
-                    <div className="mb-3 flex gap-2">
+                    <div className="mb-3 flex gap-2 flex-wrap ">
                       {detailAnime?.data?.genreList.map((anime, index) => (
                         <p key={index}>{anime.title}</p>
                       ))}
